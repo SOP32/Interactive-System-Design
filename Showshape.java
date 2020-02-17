@@ -9,7 +9,7 @@ import javax.swing.event.DocumentListener;
 import static javax.swing.GroupLayout.Alignment.*;
 
 @SuppressWarnings("serial")
-public class Showshape extends JFrame {
+public class Message extends JFrame {
  
    public static final int width = 350;
    public static final int height = 350;
@@ -22,25 +22,17 @@ public class Showshape extends JFrame {
    private String message ="";
    String[] fontstyleItems = new String[] {"Regular","Italic", "Bold","Bold Italic"};
    String[] fontsizeItems = new String[] {"8","10","12","14","16","18","20","22","24","26","28","30"};
+   String[] colorItems = new String[] {"black", "blue", "cyan", "dark gray", "gray", "green", "light gray", "magenta", "orange", "pink", "red", "white", "yellow"};
    private JRadioButton rec, oval, roundrec;
-   
-   private JButton fgcolor, bgcolor;
-   private Color c = Color.BLACK;
-   private Color c1 = Color.WHITE;
+   private Color fgColor = Color.BLACK;
+   private Color bgColor = Color.WHITE;
    private int size = 12,X1= 100,Y1 = 100;
    private String shape = "RECT";
-   public Showshape() {
-	  JPanel panel = new JPanel(new FlowLayout());
-	  
-	  
-      JPanel pn = new JPanel(new FlowLayout());
-      JPanel pn1 = new JPanel();
+   public Message() {
+	  JPanel panelContainer = new JPanel(new FlowLayout());
+      JPanel panel = new JPanel();
       
-      GroupLayout groupLayout = new GroupLayout(pn1); 
-      JSeparator s = new JSeparator(); 
-      s.setOrientation(SwingConstants.HORIZONTAL); 
-                 
-	  
+      GroupLayout groupLayout = new GroupLayout(panel); 
       DocumentListener dl = new DocumentListener() {
 
 		@Override	
@@ -68,14 +60,11 @@ public class Showshape extends JFrame {
 		}
       };
       JLabel label = new JLabel("Message"); 
-      pn.add(label);
       t =new JTextField(15);
-      pn.add(t);
       t.getDocument().addDocumentListener(dl); 	 
       
       JComboBox<String> fontsizeList = new JComboBox<>(fontsizeItems);
       fontsizeList.setAlignmentX(Component.LEFT_ALIGNMENT);
-      pn.add(fontsizeList);
       fontsizeList.setMaximumSize( fontsizeList.getPreferredSize() );
       
       fontsizeList.addActionListener(new ActionListener() {
@@ -123,7 +112,6 @@ public class Showshape extends JFrame {
       
       JComboBox<String> fontstyleList = new JComboBox<>(fontstyleItems);
       fontstyleList.setAlignmentX(Component.LEFT_ALIGNMENT);
-      pn.add(fontstyleList);
       fontstyleList.setMaximumSize( fontstyleList.getPreferredSize() );
       
       fontstyleList.addActionListener(new ActionListener() {
@@ -144,42 +132,101 @@ public class Showshape extends JFrame {
     	        {fontstyle =Font.BOLD+Font.ITALIC; canvas.repaint(); }
     	    }
     	});
-
-    	      fgcolor = new JButton("Change Foreground Color");
-    	      fgcolor.addActionListener(new ActionListener() {
-    	            public void actionPerformed(ActionEvent evt) {
-    	            c = JColorChooser.showDialog(Showshape.this,"Please choose a color",c);
-    	             if(c == null)
-    	             {
-    	            	 c = c.BLACK;
-    	             }
-    	             canvas.repaint();
-    	          }
-    	      });
-    	      
-    	      bgcolor = new JButton("Change Background Color");
-    	      bgcolor.addActionListener(new ActionListener() {
-    	            public void actionPerformed(ActionEvent evt) {
-    	            c1 = JColorChooser.showDialog(Showshape.this,"Please choose a color",c1);
-    	             if(c1 == null)
-    	             {
-    	            	 c1 = c.RED;
-    	             }
-    	             canvas.repaint();
-    	          }
-    	      });
+      
+      JComboBox<String> bgcolorList = new JComboBox<>(colorItems);
+      bgcolorList.setSelectedItem("white");
+      bgcolorList.setAlignmentX(Component.LEFT_ALIGNMENT);
+      bgcolorList.setMaximumSize( bgcolorList.getPreferredSize() );
+      
+      bgcolorList.addActionListener(new ActionListener() {
+    	  
+    	    @Override
+    	    public void actionPerformed(ActionEvent event) {
+    	        JComboBox<String> combo = (JComboBox<String>) event.getSource();
+    	        String selectedbgcolor = (String) combo.getSelectedItem();
+    	 
+    	        if (selectedbgcolor.equals("black")) {
+    	        	bgColor =Color.BLACK; canvas.repaint();
+    	        } else if (selectedbgcolor.equals("blue")) {
+    	        	bgColor =Color.BLUE; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("cyan")) {
+    	        	bgColor =Color.CYAN; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("dark gray")) {
+    	        	bgColor =Color.darkGray; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("gray")) {
+    	        	bgColor =Color.gray; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("light gray")) {
+    	        	bgColor =Color.lightGray; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("green")) {
+    	        	bgColor =Color.green; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("magenta")) {
+    	        	bgColor =Color.magenta; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("orange")) {
+    	        	bgColor =Color.orange; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("pink")) {
+    	        	bgColor =Color.pink; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("red")) {
+    	        	bgColor =Color.red; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("white")) {
+    	        	bgColor =Color.white; canvas.repaint();
+    	        }else if (selectedbgcolor.equals("yellow")) {
+    	        	bgColor =Color.yellow; canvas.repaint();
+    	        }    	        
+    	    }
+    	});
+      JComboBox<String> fgcolorList = new JComboBox<>(colorItems);
+      fgcolorList.setSelectedItem("black");
+      fgcolorList.setAlignmentX(Component.LEFT_ALIGNMENT);
+      fgcolorList.setMaximumSize( fgcolorList.getPreferredSize() );
+      
+      fgcolorList.addActionListener(new ActionListener() {
+    	  
+    	    @Override
+    	    public void actionPerformed(ActionEvent event) {
+    	        JComboBox<String> combo = (JComboBox<String>) event.getSource();
+    	        String selectedfgcolor = (String) combo.getSelectedItem();
+    	 
+    	        if (selectedfgcolor.equals("black")) {
+    	        	fgColor =Color.BLACK; canvas.repaint();
+    	        } else if (selectedfgcolor.equals("blue")) {
+    	        	fgColor =Color.BLUE; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("cyan")) {
+    	        	fgColor =Color.CYAN; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("dark gray")) {
+    	        	fgColor =Color.darkGray; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("gray")) {
+    	        	fgColor =Color.gray; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("light gray")) {
+    	        	fgColor =Color.lightGray; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("green")) {
+    	        	fgColor =Color.green; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("magenta")) {
+    	        	fgColor =Color.magenta; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("orange")) {
+    	        	fgColor =Color.orange; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("pink")) {
+    	        	fgColor =Color.pink; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("red")) {
+    	        	fgColor =Color.red; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("white")) {
+    	        	fgColor =Color.white; canvas.repaint();
+    	        }else if (selectedfgcolor.equals("yellow")) {
+    	        	fgColor =Color.yellow; canvas.repaint();
+    	        }    	        
+    	    }
+    	});
     	      
     	      ButtonGroup group = new ButtonGroup();
     	      rec = new JRadioButton("Rectangle");
     	      group.add(rec);
-    	      pn1.add(rec);
+    	      panel.add(rec);
     	      rec.addActionListener(new ActionListener() {
     	            public void actionPerformed(ActionEvent evt) {
     	            shape ="RECT"; canvas.repaint(); }
     	      });
     	      
     	      oval = new JRadioButton("Oval");
-    	      pn1.add(oval);
+    	      panel.add(oval);
     	      group.add(oval);
     	      oval.addActionListener(new ActionListener() {
     	            public void actionPerformed(ActionEvent evt) {
@@ -187,7 +234,7 @@ public class Showshape extends JFrame {
     	      });
     	      
     	      roundrec = new JRadioButton("RoundedRectangle");
-    	      pn1.add(roundrec);
+    	      panel.add(roundrec);
     	      group.add(roundrec);
     	      roundrec.addActionListener(new ActionListener() {
     	            public void actionPerformed(ActionEvent evt) {
@@ -200,7 +247,6 @@ public class Showshape extends JFrame {
     	      shapeWidth.addChangeListener(new ChangeListener() {
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					// TODO Auto-generated method stub
 					X1 = (int) spinnerModel1.getValue();
 					canvas.repaint();
 				}
@@ -221,6 +267,8 @@ public class Showshape extends JFrame {
     	      JLabel textAttributes = new JLabel("Text Attributes");
     	      JLabel fontSizeLabel = new JLabel("Font Size");
     	      JLabel fontStyleLabel = new JLabel("Font Style");
+    	      JLabel bgColorLabel = new JLabel("Background Color");
+    	      JLabel fgColorLabel = new JLabel("Foreground Color");
     	     
     	      
     	      TitledBorder shapeBorder = BorderFactory.createTitledBorder("Shape Attributes");
@@ -234,6 +282,8 @@ public class Showshape extends JFrame {
     	    		  groupLayout.createSequentialGroup() 
     	    		  .addGroup(groupLayout.createParallelGroup(LEADING)
     	    				  .addComponent(label)
+    	    				  .addComponent(bgColorLabel)
+    	    				  .addComponent(fgColorLabel)
     	    				  .addGroup(groupLayout.createParallelGroup(LEADING)
     	    						  .addGroup(groupLayout.createSequentialGroup() 
     	    								  .addComponent(shapeAttributes)
@@ -253,9 +303,8 @@ public class Showshape extends JFrame {
 
     	    	        .addGroup(groupLayout.createParallelGroup(LEADING)
     	    	        		.addComponent(t)
-    	    	        		.addGroup(groupLayout.createSequentialGroup()
-    	    	        		.addComponent(bgcolor)
-    	    	        		.addComponent(fgcolor))
+    	    	        		.addComponent(bgcolorList)
+    	    	        		.addComponent(fgcolorList)
     	    	        		.addGroup(groupLayout.createParallelGroup(TRAILING)
     	    	        				.addGroup(groupLayout.createSequentialGroup() 
     		  	        						.addComponent(shapeHeightLabel)
@@ -280,10 +329,14 @@ public class Showshape extends JFrame {
     	    		  	.addComponent(label)
     	    		  	.addComponent(t))
     	    		  
-    	    		  .addGroup(groupLayout.createParallelGroup(BASELINE).addGap(50)
-    	    		  	.addComponent(bgcolor)
-    	      			.addComponent(fgcolor))
-    	    		  
+    	    		  .addGroup(groupLayout.createParallelGroup(BASELINE)
+    	    	    			.addComponent(bgColorLabel)
+    	    	    			.addComponent(bgcolorList))
+    	    	    			
+    	    	    .addGroup(groupLayout.createParallelGroup(BASELINE).addGap(50)
+    	    	    			.addComponent(fgColorLabel)
+    	    	    			.addComponent(fgcolorList))
+  
     	    		  .addGroup(groupLayout.createParallelGroup(BASELINE)
     	    				  .addComponent(shapeAttributes)
     	    				  )
@@ -319,25 +372,22 @@ public class Showshape extends JFrame {
     	    		  
     	      			);
     	      
-    	      groupLayout.linkSize(fontsizeList, fontstyleList);
-    	      pn1.setLayout(groupLayout);
-    	      panel.setSize(new Dimension(width, height));
-    	      panel.add(pn1);
+    	      groupLayout.linkSize(fontsizeList, fontstyleList, bgcolorList, fgcolorList, t);
+    	      groupLayout.linkSize(shapeHeight, shapeWidth);
+    	      panel.setLayout(groupLayout);
+    	      panelContainer.setSize(new Dimension(width, height));
+    	      panelContainer.add(panel);
     	    		      		  
-    	      
-      // Set up a custom drawing JPanel
       canvas = new DrawCanvas();
       canvas.setPreferredSize(new Dimension(width, height));
- 
-     
       Container cp = getContentPane();
       
       cp.setLayout(new GridLayout(0,2));
-      cp.add(panel);
+      cp.add(panelContainer);
       cp.add(canvas);
     
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-      setTitle("ShowShape");
+      setTitle("Message");
       pack();           
       setVisible(true); 
       requestFocus();   
@@ -349,8 +399,8 @@ public class Showshape extends JFrame {
          super.paintComponent(g);
          f = new Font("TimesRoman",fontstyle,size);
          setFont(f);
-         setBackground(c1);
-         g.setColor(c);
+         setBackground(bgColor);
+         g.setColor(fgColor);
          FontMetrics fm = g.getFontMetrics();
 		    int x = (getWidth() - fm.stringWidth(message))/2;
 		    int y = (getHeight()/2)+ fm.getDescent();
@@ -375,7 +425,7 @@ public class Showshape extends JFrame {
 				g.drawRect((getWidth()-X1)/2,(getHeight()-Y1)/2,X1,Y1);
 				g.drawString(message, x,y);
 			}
-      if(fm.stringWidth(message) > Y1)
+      if(fm.stringWidth(message) > X1)
       {
     	  message = "Text too long";
     	  f = new Font("TimesRoman",fontstyle,size);
@@ -390,7 +440,7 @@ public class Showshape extends JFrame {
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
-            new Showshape();
+            new Message();
             }
       });
    }
